@@ -1,7 +1,12 @@
 function getInputTx() {
 	BALANCE_FILE=/tmp/walletBalances.txt
 	rm $BALANCE_FILE
-	read -p 'Wallet Name: ' TX_WALLET_NAME
+	if [ -z "$1" ]
+	then
+		read -p 'Wallet Name: ' TX_WALLET_NAME
+	else
+		TX_WALLET_NAME=$1
+	fi
 	./balance.sh $TX_WALLET_NAME > $BALANCE_FILE
 	TX_WALLET_ADDR=$(cat ./wallets/$TX_WALLET_NAME.addr)
 	cat $BALANCE_FILE

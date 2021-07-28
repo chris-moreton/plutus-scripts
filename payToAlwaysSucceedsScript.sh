@@ -1,1 +1,1 @@
-./payToScript.sh 10000000 200000 AlwaysSucceeds 42
+./payToScript.sh 666666666 200000 AlwaysSucceeds 6666

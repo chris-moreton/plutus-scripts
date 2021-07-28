@@ -1,9 +1,5 @@
-SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file ~/scripts/$1.plutus --testnet-magic 7)
-echo "====================================================================================================="
-echo "BALANCES"
-echo "====================================================================================================="
-$CARDANO_CLI query utxo --address $SCRIPT_ADDRESS --testnet-magic 7
-echo "====================================================================================================="
-echo "SCRIPT ADDRESS = $SCRIPT_ADDRESS"
-echo "====================================================================================================="
+SCRIPT_NAME=$1
+SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file ~/scripts/${SCRIPT_NAME}.plutus --testnet-magic 7)
+echo $SCRIPT_ADDRESS > ./wallets/${SCRIPT_NAME}.addr
+./balance.sh ${SCRIPT_NAME}
 
