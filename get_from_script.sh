@@ -7,7 +7,7 @@ FEE=$5
 DATUM_VALUE=$6
 COLLATERALHASH=$7
 COLLATERALINDEX=$8
-SCRIPT_FILE=$9
+SCRIPT_FILE=~/scripts/${9}.plutus
 COLLATERALTX=${COLLATERALHASH}#${COLLATERALINDEX}
 DATUM_HASH=$(cardano-cli transaction hash-script-data --script-data-value $DATUM_VALUE)
 SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file $SCRIPT_FILE --testnet-magic 7)
@@ -16,9 +16,12 @@ SLOT=$(./currentSlot.sh)
 FROM_ADDR=$SCRIPT_ADDRESS
 CHANGE="$(($BALANCE-$PAYMENT-$FEE))"
 TTL_PLUS="$(($SLOT+30))"
-TO_ADDR=$(cat wallet.addr)
+TO_ADDR=$(cat ~/wallets/${10}.addr)
 
 $CARDANO_CLI query protocol-parameters --testnet-magic 7 > params.json
+
+rm tx.raw
+rm tx.signed
 
 $CLI transaction build-raw \
 --tx-in ${TX} \
@@ -37,7 +40,7 @@ $CLI transaction build-raw \
 
 $CLI transaction sign \
 --tx-body-file tx.raw \
---signing-key-file wallet.skey \
+--signing-key-file ~/wallets/${10}.skey \
 --testnet-magic 7 \
 --out-file tx.signed \
 

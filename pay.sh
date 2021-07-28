@@ -1,16 +1,16 @@
 TXHASH=$1
 TXINDEX=$2
-FROM_ADDR=$(cat payment.addr)
-TO_ADDR=$(cat wallet.addr)
-SLOT=$(./currentSlot.sh)
-FEE=$5
 BALANCE=$3
+FEE=$5
 PAYMENT="$(($4-$FEE))"
+FROM_ADDR=$(cat ~/wallets/${6}.addr)
+TO_ADDR=$(cat ~/wallets/${7}.addr)
+SLOT=$(./currentSlot.sh)
 TX=${TXHASH}#${TXINDEX}
 CHANGE="$(($BALANCE-$PAYMENT-$FEE))"
 TTL_PLUS="$(($SLOT+30))"
 
-cardano-cli transaction build-raw \
+$CARDANO_CLI transaction build-raw \
 --tx-in ${TX} \
 --tx-out ${TO_ADDR}+${PAYMENT} \
 --tx-out ${FROM_ADDR}+${CHANGE} \
@@ -19,11 +19,11 @@ cardano-cli transaction build-raw \
 --out-file tx.raw \
 --alonzo-era
 
-cardano-cli transaction sign \
+$CARDANO_CLI transaction sign \
 --tx-body-file tx.raw \
---signing-key-file payment.skey \
+--signing-key-file ~/wallets/$6.skey \
 --testnet-magic 7 \
 --out-file tx.signed
 
-cardano-cli transaction submit --tx-file tx.signed --testnet-magic 7
+$CARDANO_CLI transaction submit --tx-file tx.signed --testnet-magic 7
 

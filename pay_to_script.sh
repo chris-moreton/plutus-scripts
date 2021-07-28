@@ -1,7 +1,6 @@
-CLI=/data/white/cardano-node/result/alonzo-white/cardano-cli/bin/cardano-cli
 TXHASH=$1
 TXINDEX=$2
-FROM_ADDR=$(cat wallet.addr)
+FROM_ADDR=$(cat ~/wallets/${8}.addr)
 SLOT=$(./currentSlot.sh)
 FEE=$5
 BALANCE=$3
@@ -9,11 +8,11 @@ PAYMENT=$(($4))
 TX=${TXHASH}#${TXINDEX}
 CHANGE="$(($BALANCE-$PAYMENT-$FEE))"
 TTL_PLUS="$(($SLOT+30))"
-SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file $7 --testnet-magic 7)
+SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file ~/scripts/${7}.plutus --testnet-magic 7)
 DATUM_HASH=$(cardano-cli transaction hash-script-data --script-data-value $6)
 TO_ADDR=$SCRIPT_ADDRESS
 
-$CLI transaction build-raw \
+$CARDANO_CLI transaction build-raw \
 --tx-in ${TX} \
 --tx-out ${TO_ADDR}+${PAYMENT} \
 --tx-out-datum-hash ${DATUM_HASH} \
@@ -23,10 +22,11 @@ $CLI transaction build-raw \
 --out-file tx.raw \
 --alonzo-era
 
-$CLI transaction sign \
+$CARDANO_CLI transaction sign \
 --tx-body-file tx.raw \
---signing-key-file wallet.skey \
+--signing-key-file ~/wallets/${8}.skey \
 --testnet-magic 7 \
 --out-file tx.signed \
 
-$CLI transaction submit --tx-file tx.signed --testnet-magic 7
+$CARDANO_CLI transaction submit --tx-file tx.signed --testnet-magic 7
+

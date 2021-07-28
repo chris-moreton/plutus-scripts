@@ -1,2 +1,2 @@
-cardano-cli query utxo --address $(cat $1.addr) --testnet-magic 7
+$CARDANO_CLI query utxo --address $(cat ~/wallets/$1.addr) --testnet-magic 7
 
