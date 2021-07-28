@@ -15,7 +15,7 @@ echo "==========================================================================
 source ./functions.sh
 getInputTx ${SCRIPT_NAME}
 SCRIPT_UTXO=$INPUT_UTXO
-CHANGE="$(($TX_BALANCE-$PAYMENT-$FEE))"
+SCRIPT_CHANGE="$(($TX_BALANCE-$PAYMENT))"
 
 echo "============================================================================================"
 echo "Select Collateral UTxO - output will also be sent to this wallet"
@@ -23,13 +23,19 @@ echo "==========================================================================
 source ./functions.sh
 getInputTx
 COLLATERAL_TX=$INPUT_UTXO
+FEE_UTXO=$INPUT_UTXO
+FEE_CHANGE="$(($TX_BALANCE-$FEE))"
 TO_ADDR=$TX_WALLET_ADDR
+FEE_ADDR=$TX_WALLET_ADDR
 SIGNING_WALLET=$TX_WALLET_NAME
 
 $CARDANO_CLI query protocol-parameters --testnet-magic 7 > params.json
 
 rm tx.raw
 rm tx.signed
+
+echo "Fee Change = $FEE_CHANGE"
+echo "Script Change = $SCRIPT_CHANGE"
 
 $CARDANO_CLI transaction build-raw \
 --tx-in ${SCRIPT_UTXO} \
@@ -38,12 +44,15 @@ $CARDANO_CLI transaction build-raw \
 --tx-in-script-file $SCRIPT_FILE \
 --tx-in-execution-units "(10000000000, 10000000000)" \
 --tx-in-collateral=${COLLATERAL_TX} \
---tx-out ${TO_ADDR}+${PAYMENT} \
---protocol-params-file "params.json" \
---tx-out ${SCRIPT_ADDRESS}+${CHANGE} \
---ttl ${TTL_PLUS} \
+--tx-in ${FEE_UTXO} \
 --fee ${FEE} \
+--tx-out ${FEE_ADDR}+${FEE_CHANGE} \
+--tx-out ${TO_ADDR}+${PAYMENT} \
+--tx-out ${SCRIPT_ADDRESS}+${SCRIPT_CHANGE} \
+--tx-out-datum-hash ${DATUM_HASH} \
+--ttl ${TTL_PLUS} \
 --out-file tx.raw \
+--protocol-params-file "params.json" \
 --alonzo-era
 
 $CARDANO_CLI transaction sign \
