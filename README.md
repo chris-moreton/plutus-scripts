@@ -22,7 +22,11 @@ Gets the balance of the address in ~/wallets/mywallet.addr
 
 	./balance.sh mywallet
 
+Pay to smart contract.
+
 	./pay_to_script.sh d811ec87ac24c4c9dbd6db5c949e8585c854ed255cd422394adfadf184e441a8 1 98667665302 1010011010 167481 666 AlwaysSucceeds.plutus
+
+Get from smart contract.
 
 	./get_from_script.sh d811ec87ac24c4c9dbd6db5c949e8585c854ed255cd422394adfadf184e441a8 0 666000000 1000000 110174477 666 8c5f24a4eee17773d2ddef2ee1493248b1c45c56e6851d6f330deee1dc23a21f 1 AlwaysSucceeds mywallet
 
