@@ -6,8 +6,6 @@ Feel free to get in touch if you think there is something I might be able to hel
 
 Put all .addr files and their associated .skey files in ~/wallets
 
-Put all .plutus files in ~/scripts
-
 Clues to the order of the arguments to each script can be found in the scripts themselves.
 
 Set the CARDANO_CLI to point to the correct version of cardano-cli.

@@ -26,7 +26,7 @@ rm tx.signed
 $CLI transaction build-raw \
 --tx-in ${TX} \
 --tx-in-datum-value $DATUM_VALUE \
---tx-in-redeemer-value 0 \
+--tx-in-redeemer-value 42 \
 --tx-in-script-file $SCRIPT_FILE \
 --tx-in-execution-units "(10000000000, 10000000000)" \
 --tx-in-collateral=${COLLATERALTX} \
