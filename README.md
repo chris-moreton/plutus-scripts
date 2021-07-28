@@ -12,6 +12,19 @@ Set the CARDANO_CLI to point to the correct version of cardano-cli.
 
 	export CARDANO_CLI=/data/white/cardano-node/result/alonzo-white/cardano-cli/bin/cardano-cli
 
+Ask for a wallet and UTxO row. Useful for various automations.
+
+	./txBalance.sh
+	Wallet Name: wallet
+	                           TxHash                                 TxIx        Amount
+	--------------------------------------------------------------------------------------
+	8c5f24a4eee17773d2ddef2ee1493248b1c45c56e6851d6f330deee1dc23a21f     1        97657486811 lovelace + TxOutDatumHashNone
+	a9a966bf7112d0a66c63c73cb5e84a5e03a9bb1a354a75b99f1ba0008655991e     0        99832959 lovelace + TxOutDatumHashNone
+	da8679a83da9a8f4a71a303d60e328290c8cc61ceac103bc54ce022bd6e05baa     0        189899800000 lovelace + TxOutDatumHashNone
+	f6b2ec8bb74b388b5864f73029b35e26f5feb5c2cd570694a4b2638d28507386     0        1000000 lovelace + TxOutDatumHashNone
+	TX Row Number: 2
+	ADA held in a9a966bf7112d0a66c63c73cb5e84a5e03a9bb1a354a75b99f1ba0008655991e#0 is 99832959
+
 Gets the UTxOs sitting at the address of the ~/scripts/AlwaysSucceeds.plutus script.
 
 	./contract_balance.sh AlwaysSucceeds
