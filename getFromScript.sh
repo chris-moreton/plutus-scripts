@@ -7,7 +7,6 @@ DATUM_HASH=$(cardano-cli transaction hash-script-data --script-data-value $DATUM
 SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file $SCRIPT_FILE --testnet-magic 7)
 echo $SCRIPT_ADDRESS > ./wallets/${SCRIPT_NAME}.addr
 SLOT=$(./currentSlot.sh)
-TTL_PLUS="$(($SLOT+30))"
 
 section "Select Script UTxO"
 source ./functions.sh
@@ -47,7 +46,6 @@ $CARDANO_CLI transaction build-raw \
 --tx-out ${TO_ADDR}+${PAYMENT} \
 --tx-out ${SCRIPT_ADDRESS}+${SCRIPT_CHANGE} \
 --tx-out-datum-hash ${DATUM_HASH} \
---ttl ${TTL_PLUS} \
 --out-file tx.raw \
 --protocol-params-file "params.json" \
 --alonzo-era
@@ -58,4 +56,4 @@ $CARDANO_CLI transaction sign \
 --testnet-magic 7 \
 --out-file tx.signed \
 
-$CARDANO_CLI transaction submit --tx-file tx.signed --testnet-magic 7
+$CARDANO_CLI transaction submit --tx-file tx.signed --testnet-magic $TESTNET_MAGIC_NUM

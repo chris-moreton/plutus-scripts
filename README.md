@@ -8,9 +8,10 @@ Setup
 
 Put all .addr files and their associated .skey files in ./wallets and all Plutus scripts in ./scripts.
 
-Set the CARDANO_CLI to point to the correct version of cardano-cli.
+Set environment variables
 
 	export CARDANO_CLI=/data/white/cardano-node/result/alonzo-white/cardano-cli/bin/cardano-cli
+        export TESTNET_MAGIC_NUM=7
 
 Functions file
 --------------
