@@ -1,6 +1,6 @@
 function getInputTx() {
 	BALANCE_FILE=/tmp/walletBalances.txt
-	rm $BALANCE_FILE
+	rm -f $BALANCE_FILE
 	if [ -z "$1" ]
 	then
 		read -p 'Wallet Name: ' SELECTED_WALLET_NAME

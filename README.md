@@ -6,7 +6,7 @@ These are my helper scripts while working with the Alonzo White testnet.
 Setup
 -----
 
-Put all .addr files and their associated .skey files in ./wallets and all Plutus scripts in ./scripts.
+Put all .addr files in ./wallets and all Plutus scripts in ./scripts. Put all .skey and .vkey files in ~/wallets.
 
 Set environment variables
 

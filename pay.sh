@@ -1,27 +1,30 @@
-TXHASH=$1
-TXINDEX=$2
-BALANCE=$3
-FEE=$5
-PAYMENT="$(($4-$FEE))"
-FROM_ADDR=$(cat ~/wallets/${6}.addr)
-TO_ADDR=$(cat ~/wallets/${7}.addr)
+source functions.sh
+getInputTx
+FROM_UTXO=${SELECTED_UTXO}
+FROM_WALLET_NAME=${SELECTED_WALLET_NAME}
+FROM_WALLET_ADDRESS=${SELECTED_WALLET_ADDR}
+FROM_BALANCE=${SELECTED_UTXO_LOVELACE}
+
+read -p 'Lovelace to send: ' LOVELACE_TO_SEND
+read -p 'Receiving wallet name: ' TO_WALLET_NAME
+
+TO_WALLET_ADDRESS=$(cat ./wallets/$TO_WALLET_NAME.addr)
+
+FEE=200000
 SLOT=$(./currentSlot.sh)
-TX=${TXHASH}#${TXINDEX}
-CHANGE="$(($BALANCE-$PAYMENT-$FEE))"
-TTL_PLUS="$(($SLOT+30))"
+CHANGE="$(($FROM_BALANCE-$LOVELACE_TO_SEND-$FEE))"
 
 $CARDANO_CLI transaction build-raw \
---tx-in ${TX} \
---tx-out ${TO_ADDR}+${PAYMENT} \
---tx-out ${FROM_ADDR}+${CHANGE} \
---ttl ${TTL_PLUS} \
+--tx-in ${FROM_UTXO} \
+--tx-out ${TO_WALLET_ADDRESS}+${LOVELACE_TO_SEND} \
+--tx-out ${FROM_WALLET_ADDRESS}+${CHANGE} \
 --fee ${FEE} \
 --out-file tx.raw \
 --alonzo-era
 
 $CARDANO_CLI transaction sign \
 --tx-body-file tx.raw \
---signing-key-file ~/wallets/$6.skey \
+--signing-key-file ~/wallets/$FROM_WALLET_NAME.skey \
 --testnet-magic 7 \
 --out-file tx.signed
 
