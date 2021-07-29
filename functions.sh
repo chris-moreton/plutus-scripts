@@ -3,18 +3,29 @@ function getInputTx() {
 	rm $BALANCE_FILE
 	if [ -z "$1" ]
 	then
-		read -p 'Wallet Name: ' TX_WALLET_NAME
+		read -p 'Wallet Name: ' SELECTED_WALLET_NAME
 	else
-		TX_WALLET_NAME=$1
+		SELECTED_WALLET_NAME=$1
 	fi
-	./balance.sh $TX_WALLET_NAME > $BALANCE_FILE
-	TX_WALLET_ADDR=$(cat ./wallets/$TX_WALLET_NAME.addr)
+	./balance.sh $SELECTED_WALLET_NAME > $BALANCE_FILE
+	SELECTED_WALLET_ADDR=$(cat ./wallets/$SELECTED_WALLET_NAME.addr)
 	cat $BALANCE_FILE
 	read -p 'TX Row Number: ' TMP
 	TX_ROW_NUM="$(($TMP+2))"
 	TX_ROW=$(sed "${TX_ROW_NUM}q;d" $BALANCE_FILE)
-	INPUT_UTXO="$(echo $TX_ROW | awk '{ print $1 }')#$(echo $TX_ROW | awk '{ print $2 }')"
-	TX_BALANCE=$(echo $TX_ROW | awk '{ print $3 }')
-	echo "ADA held in $INPUT_UTXO is $TX_BALANCE"
+	SELECTED_UTXO="$(echo $TX_ROW | awk '{ print $1 }')#$(echo $TX_ROW | awk '{ print $2 }')"
+	SELECTED_UTXO_LOVELACE=$(echo $TX_ROW | awk '{ print $3 }')
+	echo "ADA held in $SELECTED_UTXO is $SELECTED_UTXO_LOVELACE"
+}
+
+function section {
+  echo "============================================================================================"
+  echo $1
+  echo "============================================================================================"
+}
+
+function removeTxFiles() {
+  rm -f tx.raw
+  rm -f tx.signed
 }
 

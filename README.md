@@ -15,9 +15,14 @@ Set the CARDANO_CLI to point to the correct version of cardano-cli.
 Functions file
 --------------
 
-The various scripts rely on the functions.sh file which currently contains just one function. That function will
-prompt the user for a wallet name and then ask them to select a UTxO. Various environment variables are then set
+The various scripts use the functions.sh file. One of the functions in that file is called *getInputTx* and
+which will prompt the user for a wallet name and then ask them to select a UTxO. Various environment variables are then set
 which can be used in writing scripts.
+
+    SELECTED_UTXO (Hash#Index)
+    SELECTED_WALLET_ADDR
+    SELECTED_UTXO_LOVELACE
+    SELECTED_WALLET_NAME
 
 Some Helpers
 ------------
