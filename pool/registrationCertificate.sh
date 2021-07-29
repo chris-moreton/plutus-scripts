@@ -2,13 +2,13 @@ FILENAME=metadata.json
 wget ${METADATA_URL} -O ${FILENAME}
 METADATA_HASH=$(cardano-cli stake-pool metadata-hash --pool-metadata-file ${FILENAME})
 $CARDANO_CLI stake-pool registration-certificate \
---cold-verification-key-file cold.vkey \
---vrf-verification-key-file vrf.vkey \
+--cold-verification-key-file $COLD_VKEY \
+--vrf-verification-key-file $VRF_VKEY \
 --pool-pledge ${PLEDGE} \
 --pool-cost ${COST} \
 --pool-margin ${MARGIN} \
---pool-reward-account-verification-key-file stake.vkey \
---pool-owner-stake-verification-key-file stake.vkey \
+--pool-reward-account-verification-key-file $STAKE_VKEY \
+--pool-owner-stake-verification-key-file $STAKE_VKEY \
 --mainnet \
 --single-host-pool-relay ${RELAY_IP} \
 --pool-relay-port ${RELAY_PORT} \
