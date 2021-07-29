@@ -18,6 +18,16 @@ function getInputTx() {
 	echo "ADA held in $SELECTED_UTXO is $SELECTED_UTXO_LOVELACE"
 }
 
+setDatumHash() {
+	DATUM_HASH=$(cardano-cli transaction hash-script-data --script-data-value $DATUM_VALUE)
+	#return $(cardano-cli transaction hash-script-data --script-data-value $1)
+}
+
+getScriptAddress() {
+	SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file ./scripts/HelloWorld.plutus --testnet-magic $TESTNET_MAGIC_NUM)
+        echo $SCRIPT_ADDRESS > ./wallets/HelloWorld.addr
+}
+
 function section {
   echo "============================================================================================"
   echo $1
