@@ -1,3 +1,8 @@
+removeTxFiles
+./registrationCertificate.sh
+./delegationCertificate.sh
+./buildTransaction.sh
+
 cardano-cli transaction build-raw \
 --tx-in ${TX} \
 --tx-out ${SELECTED_WALLET_ADDR}+${CHANGE} \

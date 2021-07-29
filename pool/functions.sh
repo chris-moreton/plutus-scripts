@@ -1,8 +1,8 @@
 function getInputTx() {
 	BALANCE_FILE=/tmp/walletBalances.txt
-	rm $BALANCE_FILE
-	$CARDANO_CLI query utxo --address $(cat $WALLET_LOCATION.addr) > $BALANCE_FILE
-	SELECTED_WALLET_ADDR=$(cat $WALLET_LOCATION.addr)
+	rm -f $BALANCE_FILE
+	$CARDANO_CLI query utxo --address $(cat $PAYMENT_ADDRESS) --mainnet > $BALANCE_FILE
+	SELECTED_WALLET_ADDR=$(cat $PAYMENT_ADDRESS)
 	cat $BALANCE_FILE
 	read -p 'TX Row Number: ' TMP
 	TX_ROW_NUM="$(($TMP+2))"

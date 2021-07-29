@@ -1,5 +1,8 @@
+#!/bin/bash
+
 source .params
-source ../functions.sh
-./raw.sh
+./buildRaw.sh
+
+cat tx.raw
 
 
