@@ -29,11 +29,6 @@ import qualified Ledger.Typed.Scripts as Scripts
 import qualified PlutusTx
 import           PlutusTx.Prelude as P hiding (Semigroup (..), unless)
 
-
-{-
-  The "hello world" message as a bytestring
--}
-
 data Chrismo = Chrismo {
     cName :: P.ByteString
   , cDob  :: P.ByteString  
