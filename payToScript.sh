@@ -2,12 +2,11 @@ source ./functions.sh
 getInputTx
 
 FROM_ADDR=$SELECTED_WALLET_ADDR
-SLOT=$(./currentSlot.sh)
 PAYMENT=$1
 FEE=$2
 CHANGE="$(($SELECTED_UTXO_LOVELACE-$PAYMENT-$FEE))"
-SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file ./scripts/${3}.plutus --testnet-magic 7)
-DATUM_HASH=$(cardano-cli transaction hash-script-data --script-data-value $4)
+SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file ./scripts/${3}.plutus --testnet-magic $TESTNET_MAGIC_NUM)
+DATUM_HASH=$(cardano-cli transaction hash-script-data --script-data-value "$4")
 TO_ADDR=$SCRIPT_ADDRESS
 
 $CARDANO_CLI transaction build-raw \

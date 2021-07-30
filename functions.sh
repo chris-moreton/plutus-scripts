@@ -24,8 +24,8 @@ setDatumHash() {
 }
 
 getScriptAddress() {
-	SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file ./scripts/HelloWorld.plutus --testnet-magic $TESTNET_MAGIC_NUM)
-        echo $SCRIPT_ADDRESS > ./wallets/HelloWorld.addr
+	SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file ./scripts/$1.plutus --testnet-magic $TESTNET_MAGIC_NUM)
+        echo $SCRIPT_ADDRESS > ./wallets/$1.addr
 }
 
 function section {

@@ -52,7 +52,7 @@ $CARDANO_CLI transaction build-raw \
 
 $CARDANO_CLI transaction sign \
 --tx-body-file tx.raw \
---signing-key-file ./wallets/${SIGNING_WALLET}.skey \
+--signing-key-file ~/wallets/${SIGNING_WALLET}.skey \
 --testnet-magic 7 \
 --out-file tx.signed \
 
