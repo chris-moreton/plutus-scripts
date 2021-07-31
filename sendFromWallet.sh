@@ -1,5 +1,5 @@
 source functions.sh
-getInputTx
+getInputTx $1
 FROM_UTXO=${SELECTED_UTXO}
 FROM_WALLET_NAME=${SELECTED_WALLET_NAME}
 FROM_WALLET_ADDRESS=${SELECTED_WALLET_ADDR}
@@ -24,7 +24,7 @@ $CARDANO_CLI transaction build-raw \
 
 $CARDANO_CLI transaction sign \
 --tx-body-file tx.raw \
---signing-key-file ~/wallets/$FROM_WALLET_NAME.skey \
+--signing-key-file ./wallets/$FROM_WALLET_NAME.skey \
 --testnet-magic 7 \
 --out-file tx.signed
 
