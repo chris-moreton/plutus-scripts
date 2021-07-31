@@ -3,6 +3,10 @@ Quick and Dirty Alonzo White Bash Scripts
 
 These are my helper scripts while working with the Alonzo White testnet.
 
+I use this repo in some of [my notes](https://plutus-pioneer-program.readthedocs.io/en/latest/alonzowhiteex1.html) on running the Alonzo White exercises.
+
+Below is the old README which is a little out-of-date and I'll remove it once I've finished the above notes.
+
 Setup
 -----
 
