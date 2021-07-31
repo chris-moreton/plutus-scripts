@@ -1,28 +1,30 @@
+source ./functions.sh
 PAYMENT=$1
 FEE=$2
 SCRIPT_NAME=${3}
 SCRIPT_FILE=./scripts/${SCRIPT_NAME}.plutus
 DATUM_VALUE=$4
-DATUM_HASH=$(cardano-cli transaction hash-script-data --script-data-value $DATUM_VALUE)
-SCRIPT_ADDRESS=$(cardano-cli address build --payment-script-file $SCRIPT_FILE --testnet-magic 7)
+DATUM_HASH=$($CARDANO_CLI transaction hash-script-data --script-data-value $DATUM_VALUE)
+SCRIPT_ADDRESS=$($CARDANO_CLI address build --payment-script-file $SCRIPT_FILE --testnet-magic 7)
 echo $SCRIPT_ADDRESS > ./wallets/${SCRIPT_NAME}.addr
 SLOT=$(./currentSlot.sh)
 
 section "Select Script UTxO"
-source ./functions.sh
 getInputTx ${SCRIPT_NAME}
 SCRIPT_UTXO=$SELECTED_UTXO
 SCRIPT_CHANGE="$(($SELECTED_UTXO_LOVELACE-$PAYMENT))"
 
-section "Select Collateral UTxO - output will also be sent to this wallet"
-source ./functions.sh
+section "Select Collateral UTxO"
 getInputTx
 COLLATERAL_TX=$SELECTED_UTXO
 FEE_UTXO=$SELECTED_UTXO
 FEE_CHANGE="$(($SELECTED_UTXO_LOVELACE-$FEE))"
-TO_ADDR=$SELECTED_WALLET_ADDR
 FEE_ADDR=$SELECTED_WALLET_ADDR
 SIGNING_WALLET=$SELECTED_WALLET_NAME
+
+read -p 'Receiving Wallet: ' TO_WALLET_NAME
+walletAddress $TO_WALLET_NAME
+TO_ADDR=$WALLET_ADDRESS
 
 $CARDANO_CLI query protocol-parameters --testnet-magic 7 > params.json
 
@@ -52,7 +54,7 @@ $CARDANO_CLI transaction build-raw \
 
 $CARDANO_CLI transaction sign \
 --tx-body-file tx.raw \
---signing-key-file ~/wallets/${SIGNING_WALLET}.skey \
+--signing-key-file ./wallets/${SIGNING_WALLET}.skey \
 --testnet-magic 7 \
 --out-file tx.signed \
 

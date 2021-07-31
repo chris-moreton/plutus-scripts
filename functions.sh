@@ -15,7 +15,10 @@ function getInputTx() {
 	TX_ROW=$(sed "${TX_ROW_NUM}q;d" $BALANCE_FILE)
 	SELECTED_UTXO="$(echo $TX_ROW | awk '{ print $1 }')#$(echo $TX_ROW | awk '{ print $2 }')"
 	SELECTED_UTXO_LOVELACE=$(echo $TX_ROW | awk '{ print $3 }')
-	echo "ADA held in $SELECTED_UTXO is $SELECTED_UTXO_LOVELACE"
+}
+
+walletAddress() {
+	WALLET_ADDRESS=$(cat ./wallets/$1.addr)
 }
 
 setDatumHash() {
