@@ -1,10 +1,13 @@
 source ./functions.sh
+
 PAYMENT=$1
 FEE=$2
 SCRIPT_NAME=${3}
 SCRIPT_FILE=./scripts/${SCRIPT_NAME}.plutus
 DATUM_VALUE=$4
-DATUM_HASH=$($CARDANO_CLI transaction hash-script-data --script-data-value $DATUM_VALUE)
+if [ -z "$5" ]; then REDEEMER_VALUE=42; else REDEEMER_VALUE=$5; fi
+
+DATUM_HASH=$($CARDANO_CLI transaction hash-script-data --script-data-value "$DATUM_VALUE")
 SCRIPT_ADDRESS=$($CARDANO_CLI address build --payment-script-file $SCRIPT_FILE --testnet-magic 7)
 echo $SCRIPT_ADDRESS > ./wallets/${SCRIPT_NAME}.addr
 SLOT=$(./currentSlot.sh)
@@ -37,8 +40,8 @@ fi
 
 $CARDANO_CLI transaction build-raw \
 --tx-in ${SCRIPT_UTXO} \
---tx-in-datum-value $DATUM_VALUE \
---tx-in-redeemer-value 42 \
+--tx-in-datum-value "${DATUM_VALUE}" \
+--tx-in-redeemer-value "${REDEEMER_VALUE}" \
 --tx-in-script-file $SCRIPT_FILE \
 --tx-in-execution-units "(10000000000, 10000000000)" \
 --tx-in-collateral=${COLLATERAL_TX} \
