@@ -12,15 +12,15 @@ import qualified Plutus.V1.Ledger.Api as Plutus
 
 import           PlutusTx.Prelude as P (ByteString)
 
-import           Cardano.PlutusExample.HelloWorldChrismo (validChrismo, Chrismo(..), helloWorldSBS, helloWorldSerialised)
+import           Cardano.PlutusExample.HelloWorldPerson (person, PersonDetails(..), helloWorldSBS, helloWorldSerialised)
 
 main :: IO ()
 main = do
   args <- getArgs
   let nargs = length args
-  let scriptname = if nargs > 1 then args!!1 else  "helloworld-chrismo.plutus"
+  let scriptname = if nargs > 1 then args!!1 else  "helloworld-person.plutus"
   putStrLn $ "Writing output to: " ++ scriptname
-  writePlutusScript (cName validChrismo) scriptname helloWorldSerialised helloWorldSBS
+  writePlutusScript (pName person) scriptname helloWorldSerialised helloWorldSBS
 
 writePlutusScript :: P.ByteString -> FilePath -> PlutusScript PlutusScriptV1 -> SBS.ShortByteString -> IO ()
 writePlutusScript datum filename scriptSerial scriptSBS =
@@ -33,7 +33,7 @@ writePlutusScript datum filename scriptSerial scriptSBS =
                 case e of
                   Left evalErr -> print ("Eval Error" :: String) >> print evalErr
                   Right exbudget -> print ("Ex Budget" :: String) >> print exbudget
-                print $ "Datum value: " <> encode (scriptDataToJson ScriptDataJsonDetailedSchema $ fromPlutusData pData)
+                print $ "Person value: " <> encode (scriptDataToJson ScriptDataJsonDetailedSchema $ fromPlutusData pData)
         Nothing -> error "defaultCostModelParams failed"
   result <- writeFileTextEnvelope filename Nothing scriptSerial
   case result of

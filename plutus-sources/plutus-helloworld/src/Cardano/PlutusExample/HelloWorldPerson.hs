@@ -11,7 +11,9 @@
 
 module Cardano.PlutusExample.HelloWorldPerson
   (
-      helloWorldSerialised
+      person
+    , PersonDetails(..)
+    , helloWorldSerialised
     , helloWorldSBS
   ) where
 
@@ -29,21 +31,21 @@ import qualified PlutusTx
 import           PlutusTx.Prelude as P hiding (Semigroup (..), unless)
 
 data PersonDetails = PersonDetails {
-    cName :: P.ByteString
-  , cDob  :: P.ByteString  
+    pName :: P.ByteString
+  , pDob  :: P.ByteString  
 } deriving Show
 
 PlutusTx.makeLift ''PersonDetails
 
 person :: PersonDetails
-person = PersonDetails { cName = "Sam Jones", cDob = "1974/12/23" }
+person = PersonDetails { pName = "Sam Jones", pDob = "1974/12/23" }
 
 {-# INLINABLE helloWorld #-}
 
 helloWorld :: PersonDetails -> P.ByteString -> P.ByteString -> ScriptContext -> P.Bool
 helloWorld thePerson datum redeemer context = 
-    cName thePerson P.== datum     P.&& 
-    cDob thePerson  P.== redeemer
+    pName thePerson P.== datum     P.&& 
+    pDob thePerson  P.== redeemer
 
 {-
     As a ScriptInstance
