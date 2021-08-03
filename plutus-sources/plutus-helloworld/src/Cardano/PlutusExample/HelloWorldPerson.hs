@@ -9,11 +9,10 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 
-module Cardano.PlutusExample.HelloWorldChrismo
-  ( validChrismo
-  , Chrismo(..)
-  , helloWorldSerialised
-  , helloWorldSBS
+module Cardano.PlutusExample.HelloWorldPerson
+  (
+      helloWorldSerialised
+    , helloWorldSBS
   ) where
 
 import           Prelude hiding (($))
@@ -29,26 +28,22 @@ import qualified Ledger.Typed.Scripts as Scripts
 import qualified PlutusTx
 import           PlutusTx.Prelude as P hiding (Semigroup (..), unless)
 
-data Chrismo = Chrismo {
+data PersonDetails = PersonDetails {
     cName :: P.ByteString
   , cDob  :: P.ByteString  
 } deriving Show
 
-PlutusTx.makeLift ''Chrismo
+PlutusTx.makeLift ''PersonDetails
 
-validChrismo :: Chrismo
-validChrismo = Chrismo { cName = "Chris Moreton", cDob = "1972/12/01" }
-
-{-
-   The Hello World validator script
--}
+person :: PersonDetails
+person = PersonDetails { cName = "Sam Jones", cDob = "1974/12/23" }
 
 {-# INLINABLE helloWorld #-}
 
-helloWorld :: Chrismo -> P.ByteString -> P.ByteString -> ScriptContext -> P.Bool
-helloWorld validParams datum redeemer context = 
-    cName validParams P.== datum     P.&& 
-    cDob validParams  P.== redeemer
+helloWorld :: PersonDetails -> P.ByteString -> P.ByteString -> ScriptContext -> P.Bool
+helloWorld thePerson datum redeemer context = 
+    cName thePerson P.== datum     P.&& 
+    cDob thePerson  P.== redeemer
 
 {-
     As a ScriptInstance
@@ -61,7 +56,7 @@ instance Scripts.ValidatorTypes HelloWorld where
 
 helloWorldInstance :: Scripts.TypedValidator HelloWorld
 helloWorldInstance = Scripts.mkTypedValidator @HelloWorld
-    ($$(PlutusTx.compile [|| helloWorld ||]) `PlutusTx.applyCode` PlutusTx.liftCode validChrismo)
+    ($$(PlutusTx.compile [|| helloWorld ||]) `PlutusTx.applyCode` PlutusTx.liftCode person)
     $$(PlutusTx.compile [|| wrap ||])
   where
     wrap = Scripts.wrapValidator @P.ByteString @P.ByteString

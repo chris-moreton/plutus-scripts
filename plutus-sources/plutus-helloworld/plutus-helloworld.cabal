@@ -46,7 +46,7 @@ library
 
   exposed-modules:      Cardano.PlutusExample.HelloWorld
                       , Cardano.PlutusExample.HelloWorldByteStringParametric
-                      , Cardano.PlutusExample.HelloWorldChrismo
+                      , Cardano.PlutusExample.HelloWorldPerson
 
   build-depends:        bytestring
                       , cardano-api
@@ -82,10 +82,10 @@ executable plutus-helloworld-bytestring
                       , plutus-tx
                       , bytestring
 
-executable plutus-helloworld-chrismo
+executable plutus-helloworld-person
   import:               base, project-config
   hs-source-dirs:       app
-  main-is:              plutus-helloworld-chrismo.hs
+  main-is:              plutus-helloworld-person.hs
   ghc-options:          -threaded -rtsopts "-with-rtsopts=-T"
 
   build-depends:        aeson
