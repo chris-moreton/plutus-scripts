@@ -11,7 +11,6 @@ read -p 'Receiving wallet name: ' TO_WALLET_NAME
 TO_WALLET_ADDRESS=$(cat ./wallets/$TO_WALLET_NAME.addr)
 
 FEE=200000
-SLOT=$(./currentSlot.sh)
 CHANGE="$(($FROM_BALANCE-$LOVELACE_TO_SEND-$FEE))"
 
 $CARDANO_CLI transaction build-raw \
