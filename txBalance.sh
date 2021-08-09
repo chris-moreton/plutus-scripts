@@ -1,5 +1,0 @@
-source ./functions.sh
-getInputTx
-
-
-
