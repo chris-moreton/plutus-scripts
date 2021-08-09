@@ -21,7 +21,7 @@ $CARDANO_CLI transaction build-raw \
 $CARDANO_CLI transaction sign \
 --tx-body-file tx.raw \
 --signing-key-file ./wallets/${SELECTED_WALLET_NAME}.skey \
---testnet-magic 7 \
+--testnet-magic $TESTNET_MAGIC_NUM \
 --out-file tx.signed \
 
 $CARDANO_CLI transaction submit --tx-file tx.signed --testnet-magic $TESTNET_MAGIC_NUM

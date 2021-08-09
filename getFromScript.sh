@@ -8,7 +8,7 @@ DATUM_VALUE=$4
 if [ -z "$5" ]; then REDEEMER_VALUE=42; else REDEEMER_VALUE=$5; fi
 
 DATUM_HASH=$($CARDANO_CLI transaction hash-script-data --script-data-value "$DATUM_VALUE")
-SCRIPT_ADDRESS=$($CARDANO_CLI address build --payment-script-file $SCRIPT_FILE --testnet-magic 7)
+SCRIPT_ADDRESS=$($CARDANO_CLI address build --payment-script-file $SCRIPT_FILE --testnet-magic $TESTNET_MAGIC_NUM)
 echo $SCRIPT_ADDRESS > ./wallets/${SCRIPT_NAME}.addr
 SLOT=$(./currentSlot.sh)
 
@@ -29,7 +29,7 @@ read -p 'Receiving Wallet: ' TO_WALLET_NAME
 walletAddress $TO_WALLET_NAME
 TO_ADDR=$WALLET_ADDRESS
 
-$CARDANO_CLI query protocol-parameters --testnet-magic 7 > params.json
+$CARDANO_CLI query protocol-parameters --testnet-magic $TESTNET_MAGIC_NUM > params.json
 
 removeTxFiles
 
@@ -58,7 +58,7 @@ $CARDANO_CLI transaction build-raw \
 $CARDANO_CLI transaction sign \
 --tx-body-file tx.raw \
 --signing-key-file ./wallets/${SIGNING_WALLET}.skey \
---testnet-magic 7 \
+--testnet-magic $TESTNET_MAGIC_NUM \
 --out-file tx.signed \
 
 $CARDANO_CLI transaction submit --tx-file tx.signed --testnet-magic $TESTNET_MAGIC_NUM

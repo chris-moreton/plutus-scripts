@@ -1,2 +1,2 @@
-$CARDANO_CLI query tip --testnet-magic 7 | jq -r '.slot'
+$CARDANO_CLI query tip --testnet-magic $TESTNET_MAGIC_NUM | jq -r '.slot'
 
