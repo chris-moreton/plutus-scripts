@@ -5,6 +5,7 @@ function getInputTx() {
 	then
 		read -p 'Wallet Name: ' SELECTED_WALLET_NAME
 	else
+		echo 'Wallet Name: ' $1
 		SELECTED_WALLET_NAME=$1
 	fi
 	./balance.sh $SELECTED_WALLET_NAME > $BALANCE_FILE
