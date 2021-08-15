@@ -3,9 +3,9 @@ source ./functions.sh
 SCRIPT_NAME=${1}
 SCRIPT_FILE=./scripts/${SCRIPT_NAME}.plutus
 DATUM_VALUE=$2
-walletAddress $3
+walletAddress $4
 TO_ADDR=$WALLET_ADDRESS
-if [ -z "$4" ]; then REDEEMER_VALUE=42; else REDEEMER_VALUE=$4; fi
+if [ -z "$3" ]; then REDEEMER_VALUE=42; else REDEEMER_VALUE=$3; fi
 
 DATUM_HASH=$($CARDANO_CLI transaction hash-script-data --script-data-value "$DATUM_VALUE")
 SCRIPT_ADDRESS=$($CARDANO_CLI address build --payment-script-file $SCRIPT_FILE --testnet-magic $TESTNET_MAGIC_NUM)

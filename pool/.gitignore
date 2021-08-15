@@ -1,5 +1,7 @@
 *.cert
 .params
 tx.*
+stake*
+payment*
 
 
