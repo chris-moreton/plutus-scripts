@@ -19,6 +19,7 @@ $CARDANO_CLI transaction build \
 --mint-script-file="./policies/$COIN_NAME.script" \
 --testnet-magic ${TESTNET_MAGIC_NUM} \
 --out-file tx.build \
+--witness-override 2 \
 --alonzo-era
 
 $CARDANO_CLI transaction sign \
