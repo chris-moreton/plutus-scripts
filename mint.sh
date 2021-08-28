@@ -1,4 +1,4 @@
-### ./mint.sh shelley Ozymandian 1000 percy
+### ./mint.sh minter Chess 1000 wallet2
 
 source functions.sh
 
@@ -33,7 +33,7 @@ $CARDANO_CLI transaction build \
 $CARDANO_CLI transaction sign \
 --tx-body-file tx.build \
 --signing-key-file ./wallets/${FROM_WALLET_NAME}.skey \
---signing-key-file ./policies/${POLICY_NAME}.skey \
+--signing-key-file ./wallets/${POLICY_NAME}.skey \
 --out-file tx.signed
 
 $CARDANO_CLI transaction submit --tx-file tx.signed --testnet-magic $TESTNET_MAGIC_NUM
