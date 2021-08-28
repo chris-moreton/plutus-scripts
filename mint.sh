@@ -21,9 +21,9 @@ FROM_WALLET_ADDRESS=${SELECTED_WALLET_ADDR}
 
 $CARDANO_CLI transaction build \
 --tx-in ${FROM_UTXO} \
---tx-out ${FROM_WALLET_ADDRESS}+$TOKEN_COUNT+"$TOKEN_COUNT ${POLICY_ID}" \
+--tx-out ${FROM_WALLET_ADDRESS}+$TOKEN_COUNT+"$TOKEN_COUNT ${POLICY_ID}.${COIN_NAME}" \
 --change-address=${FROM_WALLET_ADDRESS} \
---mint="$TOKEN_COUNT ${POLICY_ID}" \
+--mint="$TOKEN_COUNT ${POLICY_ID}.${COIN_NAME}" \
 --mint-script-file="./policies/$POLICY_NAME.script" \
 --testnet-magic ${TESTNET_MAGIC_NUM} \
 --out-file tx.build \
