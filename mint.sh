@@ -8,7 +8,7 @@ let TOKEN_COUNT=$3*1000000
 echo $TOKEN_COUNT
 MINT_WALLET_NAME=$4
 
-if test -f ./policies/$POLICY_NAME.script; then
+if [ ! -f "./policies/$POLICY_NAME.script" ]; then
     ./createPolicy.sh $POLICY_NAME
 fi
 
