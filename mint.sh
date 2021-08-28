@@ -1,13 +1,18 @@
+### ./mint.sh shelley Ozymandian 1000 percy
+
 source functions.sh
 
-COIN_NAME=$1
-let TOKEN_COUNT=$2*1000000
+POLICY_NAME=$1
+COIN_NAME=$2
+let TOKEN_COUNT=$3*1000000
 echo $TOKEN_COUNT
-MINT_WALLET_NAME=$3
+MINT_WALLET_NAME=$4
 
-./createPolicy.sh $COIN_NAME
+if test -f ./policies/$POLICY_NAME.script; then
+    ./createPolicy.sh $POLICY_NAME
+fi
 
-POLICY_ID=$($CARDANO_CLI transaction policyid --script-file ./policies/$COIN_NAME.script)
+POLICY_ID=$($CARDANO_CLI transaction policyid --script-file ./policies/$POLICY_NAME.script)
 
 getInputTx $MINT_WALLET_NAME
 FROM_UTXO=${SELECTED_UTXO}
@@ -19,7 +24,7 @@ $CARDANO_CLI transaction build \
 --tx-out ${FROM_WALLET_ADDRESS}+$TOKEN_COUNT+"$TOKEN_COUNT ${POLICY_ID}" \
 --change-address=${FROM_WALLET_ADDRESS} \
 --mint="$TOKEN_COUNT ${POLICY_ID}" \
---mint-script-file="./policies/$COIN_NAME.script" \
+--mint-script-file="./policies/$POLICY_NAME.script" \
 --testnet-magic ${TESTNET_MAGIC_NUM} \
 --out-file tx.build \
 --witness-override 2 \
@@ -28,7 +33,7 @@ $CARDANO_CLI transaction build \
 $CARDANO_CLI transaction sign \
 --tx-body-file tx.build \
 --signing-key-file ./wallets/${FROM_WALLET_NAME}.skey \
---signing-key-file ./policies/${COIN_NAME}.skey \
+--signing-key-file ./policies/${POLICY_NAME}.skey \
 --out-file tx.signed
 
 $CARDANO_CLI transaction submit --tx-file tx.signed --testnet-magic $TESTNET_MAGIC_NUM

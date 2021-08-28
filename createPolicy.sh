@@ -1,18 +1,19 @@
 mkdir -p policies
 
-cd policies
+OWNER_WALLET_NAME=$1
+POLICY_SCRIPT=policies/$OWNER_WALLET_NAME.script
 
 $CARDANO_CLI address key-gen \
-    --verification-key-file $1.vkey \
-    --signing-key-file $1.skey
+    --verification-key-file policies/$OWNER_WALLET_NAME.vkey \
+    --signing-key-file policies/$OWNER_WALLET_NAME.skey
 
 
-touch $1.script && echo "" > $1.script 
+touch $POLICY_SCRIPT && echo "" > $POLICY_SCRIPT
 
 
-echo "{" >> $1.script 
-echo "  \"keyHash\": \"$($CARDANO_CLI address key-hash --payment-verification-key-file $1.vkey)\"," >> $1.script 
-echo "  \"type\": \"sig\"" >> $1.script 
-echo "}" >> $1.script 
+echo "{" >> $POLICY_SCRIPT 
+echo "  \"keyHash\": \"$($CARDANO_CLI address key-hash --payment-verification-key-file policies/$OWNER_WALLET_NAME.vkey)\"," >> $POLICY_SCRIPT
+echo "  \"type\": \"sig\"" >> $POLICY_SCRIPT
+echo "}" >> $POLICY_SCRIPT
 
 
