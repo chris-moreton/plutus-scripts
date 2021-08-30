@@ -16,6 +16,4 @@ $CARDANO_CLI address build --payment-verification-key-file wallet3.vkey --stake-
 $CARDANO_CLI address build --payment-verification-key-file collateral.vkey --out-file collateral.addr --testnet-magic $TESTNET_MAGIC_NUM
 $CARDANO_CLI address build --payment-verification-key-file fees.vkey --out-file fees.addr --testnet-magic $TESTNET_MAGIC_NUM
 
-../createWallet.sh mary
-../createWallet.sh percy
 
